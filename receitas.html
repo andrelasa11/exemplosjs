@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Receitas</title>
+    <!-- Incluindo o Bootstrap para estilos -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body onload="preencheCatalogo()">
+    <!-- Título da página -->
+    <h1 class="text-center">Catálogo de Receitas</h1>
+
+    <!-- Container fluido com fundo amarelo (bg-warning) -->
+    <div class="container-fluid bg-warning">
+        <!-- Div para exibir as receitas no formato de painel (flex-wrap) -->
+        <div id="pnlCatalogo" class="d-flex flex-wrap justify-content-around">
+        </div>
+    </div>
+
+    <script>
+        // Vetor de receitas em JSON
+        const receitas = [
+            {
+                "titulo": "Arroz de Couve-Flor",
+                "imagem": "https://www.boasaude.com.br/images/destaques/arroz-de-couve-flor.png",
+                "ingredientes": ["Arroz", "Couve-Flor", "Cebola Média", "Azeite"],
+                "preparo": "Deixe a couve-flor picada. Adicione os ingredientes e refogue bem. Adicione sal, tampe a panela e deixe cozinhar."
+            },
+            {
+                "titulo": "Bolo de Café",
+                "imagem": "https://cdn.aquelareceita.com.br/recipes/image-1641390955778-1641924635789.png",
+                "ingredientes": ["Farinha de Trigo", "Açúcar", "Café Coado", "Chocolate em Pó", "Ovos"],
+                "preparo": "Bata o açúcar, as gemas e o café. Adicione farinha e chocolate e mexa bem. Bata as claras e junte à mistura."
+            },
+            {
+                "titulo": "Coxinha de Brigadeiro",
+                "imagem": "https://www.carolcalazans.com.br/wp-content/uploads/2022/07/coxinha-de-brigadeiro.jpg",
+                "ingredientes": ["Leite Condensado", "Chocolate em Pó", "Manteiga", "Morango", "Chocolate Granulado"],
+                "preparo": "Junte o leite condensado, chocolate em pó e manteiga. Aqueça no fogo baixo. Envolva os morangos e passe no granulado."
+            }
+        ];
+
+        // Função para gerar a lista de ingredientes em HTML
+        function getListaIngredientes(receita) {
+            let lista = "<ul>";
+            lista += receita.ingredientes.map(ingrediente => `<li>${ingrediente}</li>`).join("");
+            lista += "</ul>";
+            return lista;
+        }
+
+        // Função para criar o card de uma receita
+        function getCard(receita) {
+            return `
+            <div class="card m-3" style="width: 250px;">
+                <img src="${receita.imagem}" class="card-img-top" alt="${receita.titulo}">
+                <div class="card-body">
+                    <h5 class="card-title">${receita.titulo}</h5>
+                    <div class="card-text">
+                        ${getListaIngredientes(receita)}
+                        <hr>
+                        <p>${receita.preparo}</p>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // Função para preencher o catálogo de receitas
+        function preencheCatalogo() {
+            const pnlCatalogo = document.getElementById("pnlCatalogo");
+            pnlCatalogo.innerHTML = receitas.map(receita => getCard(receita)).join("");
+        }
+    </script>
+</body>
+
+</html>
